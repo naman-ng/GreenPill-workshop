@@ -1,5 +1,5 @@
-export const donation_address = "0xE1aF4A77f2bfEA3fd90f28CD7A9e751FFd5b7a30";
-export const donation_ABI = [
+export const contract_address = "0xE1aF4A77f2bfEA3fd90f28CD7A9e751FFd5b7a30";
+export const contract_ABI = [
   {
     "type": "function",
     "name": "createOrganization",

@@ -1,22 +1,20 @@
-import { useAccount, useSigner, useProvider, useContractWrite } from 'wagmi';
+import { useSigner } from 'wagmi';
 import { useState, useEffect } from 'react';
-import { donation_ABI, donation_address } from '@/constant';
+import { contract_ABI, contract_address } from '@/constant';
 import { ethers } from 'ethers';
 import Spinner from '@/components/Spinner';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function Create() {
-  const { address } = useAccount();
   const { data: signer } = useSigner();
-  const provider = useProvider();
   const [formInput, updateFormInput] = useState({ name: '', image: '', amount: '' });
   const [loading, setLoading] = useState(false);
 
   const createOrganization = async () => {
     try {
       setLoading(true);
-      const contract = new ethers.Contract(donation_address, donation_ABI, signer);
+      const contract = new ethers.Contract(contract_address, contract_ABI, signer);
       const tx = await contract.createOrganization(
         formInput.name,
         ethers.utils.parseEther(formInput.amount),

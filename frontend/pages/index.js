@@ -1,13 +1,11 @@
-import { useAccount, useSigner, useProvider, useContractRead } from 'wagmi';
+import { useProvider } from 'wagmi';
 import { useState, useEffect } from 'react';
-import { donation_ABI, donation_address } from '@/constant';
+import { contract_ABI, contract_address } from '@/constant';
 import { ethers } from 'ethers';
 import Spinner from '@/components/Spinner';
 import Link from 'next/link';
 
 export default function Home() {
-  const { address } = useAccount();
-  const { data: signer } = useSigner();
   const provider = useProvider();
   const [orgs, setOrgs] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -15,9 +13,9 @@ export default function Home() {
   const getOrganizations = async () => {
     try {
       setLoading(true);
-      const contract = new ethers.Contract(donation_address, donation_ABI, provider);
+      const contract = new ethers.Contract(contract_address, contract_ABI, provider);
       const tx = await contract.getOrganizations();
-      console.log(tx);
+      console.log("Tx-", tx);
       setOrgs(tx);
       setLoading(false);
     } catch (error) {
@@ -44,7 +42,7 @@ export default function Home() {
                   href={'/' + org.id}
                   className="w-72 flex flex-col border-2 border-grey-100 rounded-md shadow-md cursor-pointer mx-4 my-8"
                 >
-                  <div className="w-full h-48">
+                  <div className="w-full h-60">
                     <img className="w-full h-full object-cover" width={200} height={200} src={org.image} alt="org" />
                   </div>
                   <h2 className="py-4 text-center text-white text-xl font-bold">{org.name}</h2>
